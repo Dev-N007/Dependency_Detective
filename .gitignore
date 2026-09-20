@@ -1,0 +1,20 @@
+# Dependencies & Build Outputs
+node_modules/
+dist/
+build/
+*.egg-info/
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+
+# Local cache & temporary files
+apps/api/.cache/
+.DS_Store
+*.log
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
