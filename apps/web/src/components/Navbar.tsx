@@ -21,7 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onResetToLanding,
 }) => {
   return (
-    <header className="border-b border-slate-800 dark:border-[#202b3c] bg-white/95 dark:bg-[#0f141d]/95 backdrop-blur-md sticky top-0 z-40 px-6 py-3.5 flex items-center justify-between transition-colors">
+    <header className="border-b border-slate-200 dark:border-[#202b3c] bg-white/95 dark:bg-[#0f141d]/95 backdrop-blur-md sticky top-0 z-40 px-6 py-3.5 flex items-center justify-between transition-colors shadow-xs">
       {/* Brand */}
       <div className="flex items-center gap-4">
         <button
