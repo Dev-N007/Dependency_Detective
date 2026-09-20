@@ -12,9 +12,7 @@ def test_resolve_local_and_demo():
     assert remote_url is None
 
 def test_resolve_remote_url_detection():
-    # Detects git URL pattern without necessarily running full clone in unit test
-    is_remote_url = (
-        "https://github.com/expressjs/express.git".startswith("https://")
-        or "https://github.com/expressjs/express.git".endswith(".git")
-    )
-    assert is_remote_url is True
+    path, is_remote, remote_url = AnalysisService._resolve_repo_path("expressjs/express")
+    assert is_remote is True
+    assert remote_url == "https://github.com/expressjs/express.git"
+

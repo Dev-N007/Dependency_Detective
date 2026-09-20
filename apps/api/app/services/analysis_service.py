@@ -20,23 +20,62 @@ class AnalysisService:
 
     @staticmethod
     def _resolve_repo_path(target_path: Optional[str]) -> Tuple[Path, bool, Optional[str]]:
-        """Resolves local directory path or clones a remote Git repository URL."""
-        if not target_path or target_path.strip() == "":
+        """Resolves local directory path, workspace relative path, or clones a remote Git repository URL."""
+        if not target_path or target_path.strip() == "" or target_path.strip().lower() in ("demo", "demo-repository"):
             return DEMO_REPO_PATH.resolve(), False, None
 
         target = target_path.strip()
 
-        # Detect Git remote URL patterns
+        # 1. Check direct local path
+        try:
+            candidate_local = Path(target).resolve()
+            if candidate_local.exists():
+                return candidate_local, False, None
+        except Exception:
+            pass
+
+        # 2. Check workspace relative path
+        try:
+            workspace_candidate = (DEMO_REPO_PATH.parent / target).resolve()
+            if workspace_candidate.exists():
+                return workspace_candidate, False, None
+        except Exception:
+            pass
+
+        # 3. Handle Git Remote URLs and Subfolders (e.g. https://github.com/owner/repo or https://github.com/owner/repo/backend)
+        remote_url = target
+        subfolder = ""
+
+        # Parse GitHub URLs with subfolders (e.g., https://github.com/owner/repo/tree/main/subfolder or /backend)
+        gh_match = re.match(r"^(https?://github\.com/([^/]+)/([^/]+?))(?:\.git)?(?:/(?:tree/[^/]+/(.+)|(.+)))?$", target)
+        if gh_match:
+            base_repo = gh_match.group(1)
+            repo_owner = gh_match.group(2)
+            repo_name = gh_match.group(3)
+            subfolder = gh_match.group(4) or gh_match.group(5) or ""
+            remote_url = f"{base_repo}.git"
+        elif target.startswith("github.com/"):
+            parts = target.split("/")
+            if len(parts) >= 3:
+                remote_url = f"https://github.com/{parts[1]}/{parts[2]}.git"
+                if len(parts) > 3:
+                    subfolder = "/".join(parts[3:])
+            else:
+                remote_url = f"https://{target}.git"
+        elif "/" in target and not target.startswith((".", "/", "\\")) and ":" not in target and len(target.split("/")) == 2:
+            remote_url = f"https://github.com/{target}.git"
+
+        # Check if remote URL pattern
         is_remote_url = (
-            target.startswith("http://")
-            or target.startswith("https://")
-            or target.startswith("git@")
-            or target.startswith("git://")
-            or target.endswith(".git")
+            remote_url.startswith("http://")
+            or remote_url.startswith("https://")
+            or remote_url.startswith("git@")
+            or remote_url.startswith("git://")
+            or remote_url.endswith(".git")
         )
 
         if is_remote_url:
-            safe_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", target)
+            safe_name = re.sub(r"[^a-zA-Z0-9_\-]", "_", remote_url)
             cache_dir = (BASE_DIR / ".cache" / "remote_repos" / safe_name).resolve()
             cache_dir.mkdir(parents=True, exist_ok=True)
 
@@ -45,18 +84,24 @@ class AnalysisService:
                     repo = Repo(cache_dir)
                     repo.remotes.origin.pull()
                 except Exception as e:
-                    print(f"[AnalysisService] Git pull notice for {target}: {e}")
+                    print(f"[AnalysisService] Git pull notice for {remote_url}: {e}")
             else:
-                print(f"[AnalysisService] Cloning remote repository {target} into {cache_dir}...")
-                Repo.clone_from(target, cache_dir)
+                print(f"[AnalysisService] Cloning remote repository {remote_url} into {cache_dir}...")
+                try:
+                    Repo.clone_from(remote_url, cache_dir, depth=50)
+                except Exception as e:
+                    try:
+                        Repo.clone_from(remote_url, cache_dir)
+                    except Exception as clone_err:
+                        raise ValueError(f"Failed to clone remote repository '{remote_url}': {clone_err}")
 
-            return cache_dir, True, target
+            final_path = (cache_dir / subfolder).resolve() if subfolder else cache_dir
+            if not final_path.exists():
+                raise ValueError(f"Subfolder '{subfolder}' does not exist inside cloned repository '{remote_url}'")
 
-        local_path = Path(target).resolve()
-        if not local_path.exists():
-            raise ValueError(f"Repository path or Git remote URL does not exist: {target}")
+            return final_path, True, remote_url
 
-        return local_path, False, None
+        raise ValueError(f"Repository path or Git remote URL does not exist: {target}")
 
     @staticmethod
     def analyze_repository(target_path: Optional[str] = None) -> RepositoryAnalysis:
