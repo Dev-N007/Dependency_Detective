@@ -4,11 +4,12 @@
 
 @layer base {
   :root,
-  html.dark {
+  html.dark,
+  body.dark {
     --bg-main: #080a0f;
     --bg-panel: #0f141d;
     --bg-card: #151b26;
-    --bg-card-hover: #1e293b;
+    --bg-hover: #1e293b;
     --border-color: #202b3c;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
@@ -19,11 +20,12 @@
     --accent-amber: #ffb800;
   }
 
-  html.light {
+  html.light,
+  body.light {
     --bg-main: #f8fafc;
     --bg-panel: #ffffff;
     --bg-card: #ffffff;
-    --bg-card-hover: #f1f5f9;
+    --bg-hover: #f1f5f9;
     --border-color: #e2e8f0;
     --text-primary: #0f172a;
     --text-secondary: #334155;
@@ -35,16 +37,31 @@
   }
 
   body {
-    background-color: var(--bg-main);
-    color: var(--text-primary);
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', system-ui, sans-serif;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
 /* ==========================================================================
-   Cyber Visual Grid & Panel Utilities
+   Dedicated Light Theme Overrides (Clean White Canvas & High Contrast Slate)
    ========================================================================== */
+html.light body,
+html.light #root,
+html.light .min-h-screen {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light header,
+html.light nav,
+html.light main {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Cyber Visual Grid & Panels */
 .cyber-grid {
   background-size: 40px 40px;
   background-image: 
@@ -54,8 +71,8 @@
 
 html.light .cyber-grid {
   background-image: 
-    linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.06) 1px, transparent 1px) !important;
 }
 
 .cyber-panel {
@@ -66,18 +83,18 @@ html.light .cyber-grid {
 }
 
 html.light .cyber-panel {
-  background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Glow Shadows */
+/* Glow Accent Shadows */
 .glow-cyan {
   box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
 }
 
 html.light .glow-cyan {
-  box-shadow: 0 0 20px rgba(2, 132, 199, 0.15);
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.15) !important;
 }
 
 .glow-emerald {
@@ -85,7 +102,7 @@ html.light .glow-cyan {
 }
 
 html.light .glow-emerald {
-  box-shadow: 0 0 20px rgba(5, 150, 105, 0.15);
+  box-shadow: 0 0 20px rgba(5, 150, 105, 0.15) !important;
 }
 
 .glow-amber {
@@ -93,7 +110,7 @@ html.light .glow-emerald {
 }
 
 html.light .glow-amber {
-  box-shadow: 0 0 20px rgba(217, 119, 6, 0.15);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.15) !important;
 }
 
 .glow-purple {
@@ -101,7 +118,7 @@ html.light .glow-amber {
 }
 
 html.light .glow-purple {
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.15) !important;
 }
 
 /* Code Monospace */
@@ -109,7 +126,7 @@ pre, code {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Scrollbars */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
