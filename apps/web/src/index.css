@@ -43,7 +43,7 @@
 }
 
 /* ==========================================================================
-   Hardcoded Light Theme Direct Overrides (Forces Crisp White/Slate Appearance)
+   Hardcoded Light Theme - Clean White BG + Vibrant Complementary Accents
    ========================================================================== */
 html.light,
 html.light body,
@@ -81,29 +81,27 @@ html.light .bg-slate-100 {
 }
 
 /* Border Colors */
-html.light *,
 html.light .border-\[\#202b3c\],
 html.light .border-\[\#202b3c\]\/60,
 html.light .border-slate-800,
 html.light .border-slate-700 {
-  border-color: #e2e8f0;
+  border-color: #e2e8f0 !important;
 }
 
-/* Typography Colors */
+/* Typography Headings & Body */
 html.light h1,
 html.light h2,
 html.light h3,
 html.light h4,
 html.light h5,
-html.light h6,
-html.light .text-slate-100,
-html.light .text-slate-900 {
+html.light h6 {
   color: #0f172a !important;
 }
 
-html.light p,
-html.light span,
-html.light div,
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
 html.light .text-slate-200,
 html.light .text-slate-300,
 html.light .text-slate-700,
@@ -114,6 +112,71 @@ html.light .text-slate-800 {
 html.light .text-slate-400,
 html.light .text-slate-500 {
   color: #64748b !important;
+}
+
+/* ==========================================================================
+   Vibrant Complementary Accent Text & Badges in Light Mode
+   ========================================================================== */
+html.light .text-cyan-400,
+html.light .text-cyan-300,
+html.light .text-sky-500,
+html.light .text-sky-400 {
+  color: #0284c7 !important;
+}
+
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #059669 !important;
+}
+
+html.light .text-purple-400,
+html.light .text-purple-300,
+html.light .text-indigo-400 {
+  color: #7c3aed !important;
+}
+
+html.light .text-amber-400,
+html.light .text-amber-300 {
+  color: #d97706 !important;
+}
+
+html.light .text-rose-400,
+html.light .text-red-400 {
+  color: #dc2626 !important;
+}
+
+/* Badge & Pill Container Overrides in Light Mode */
+html.light .bg-cyan-950,
+html.light .bg-cyan-950\/60,
+html.light .bg-cyan-950\/50,
+html.light .bg-sky-950 {
+  background-color: #e0f2fe !important;
+  color: #0284c7 !important;
+  border-color: #bae6fd !important;
+}
+
+html.light .bg-emerald-950,
+html.light .bg-emerald-950\/60,
+html.light .bg-emerald-950\/50 {
+  background-color: #d1fae5 !important;
+  color: #059669 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .bg-purple-950,
+html.light .bg-purple-950\/60,
+html.light .bg-purple-950\/50 {
+  background-color: #ede9fe !important;
+  color: #7c3aed !important;
+  border-color: #ddd6fe !important;
+}
+
+html.light .bg-amber-950,
+html.light .bg-amber-950\/60,
+html.light .bg-amber-950\/40 {
+  background-color: #fef3c7 !important;
+  color: #d97706 !important;
+  border-color: #fde68a !important;
 }
 
 /* Form Inputs & Controls */
