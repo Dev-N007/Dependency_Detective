@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RepositoryAnalysis, DependencyNode, ImpactReport, ArchaeologyReport, EvidenceItem } from './types';
 import { fetchDemoRepository, analyzeRepository, investigateImpact, investigateArchaeology } from './lib/api';
 import { Navbar } from './components/Navbar';
@@ -11,6 +11,9 @@ import { CommandPalette } from './components/CommandPalette';
 import { LandingHero } from './components/LandingHero';
 
 export const App: React.FC = () => {
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('dd-theme') as 'dark' | 'light') || 'dark';
+  });
   const [analysis, setAnalysis] = useState<RepositoryAnalysis | null>(null);
   const [selectedNode, setSelectedNode] = useState<DependencyNode | null>(null);
   const [activeView, setActiveView] = useState<'graph' | 'whatif' | 'archaeology'>('graph');
@@ -19,6 +22,16 @@ export const App: React.FC = () => {
   const [activeEvidence, setActiveEvidence] = useState<EvidenceItem | null>(null);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.add(theme);
+    localStorage.setItem('dd-theme', theme);
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const handleLoadDemo = async () => {
     setIsLoading(true);
@@ -48,7 +61,7 @@ export const App: React.FC = () => {
       setActiveView('graph');
     } catch (err) {
       console.error(err);
-      alert(`Could not analyze repository at ${path}. Please check path.`);
+      alert(`Could not analyze repository at ${path}. Please check path or URL.`);
     } finally {
       setIsLoading(false);
     }
@@ -85,11 +98,13 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#080a0f] text-slate-100 font-sans">
+    <div className="min-h-screen flex flex-col bg-[#080a0f] dark:bg-[#080a0f] light:bg-slate-50 text-slate-900 dark:text-slate-100 font-sans transition-colors">
       <Navbar
         repoName={analysis?.repo_name}
         isDemo={analysis?.is_demo}
         isRemote={analysis?.is_remote}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onResetToLanding={() => setAnalysis(null)}
       />

@@ -70,23 +70,42 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onLoadDemo, onAnalyzeP
 
           <form onSubmit={handleSubmit} className="flex gap-2">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+              <Search className="w-4 h-4 text-slate-400 dark:text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type="text"
                 placeholder="Enter local path (e.g. d:/Projects/Repo) or Git URL (https://github.com/org/repo.git)..."
                 value={customPath}
                 onChange={(e) => setCustomPath(e.target.value)}
-                className="w-full bg-[#0f141d] border border-[#202b3c] rounded-xl pl-10 pr-4 py-3 text-xs font-mono text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-white dark:bg-[#0f141d] border border-slate-300 dark:border-[#202b3c] rounded-xl pl-10 pr-4 py-3 text-xs font-mono text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-500 shadow-sm"
               />
             </div>
             <button
               type="submit"
               disabled={!customPath.trim() || isLoading}
-              className="px-5 py-3 rounded-xl bg-[#151b26] border border-[#202b3c] hover:border-slate-500 text-xs font-mono font-bold text-slate-200 transition-colors disabled:opacity-50"
+              className="px-5 py-3 rounded-xl bg-slate-900 dark:bg-[#151b26] border border-slate-700 dark:border-[#202b3c] hover:border-slate-500 text-xs font-mono font-bold text-slate-100 dark:text-slate-200 transition-colors disabled:opacity-50 shadow-sm"
             >
               Analyze
             </button>
           </form>
+
+          {/* Quick Preset Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs font-mono">
+            <span className="text-slate-500 dark:text-slate-400 text-[11px]">Try preset remote repos:</span>
+            {['expressjs/express', 'axios/axios', 'psf/requests', 'lodash/lodash'].map((preset) => (
+              <button
+                key={preset}
+                type="button"
+                onClick={() => {
+                  setCustomPath(`https://github.com/${preset}.git`);
+                  onAnalyzePath(`https://github.com/${preset}.git`);
+                }}
+                disabled={isLoading}
+                className="px-2.5 py-1 rounded-lg bg-sky-100 dark:bg-cyan-950/60 hover:bg-sky-200 dark:hover:bg-cyan-900/60 border border-sky-300 dark:border-cyan-500/30 text-sky-700 dark:text-cyan-300 text-[11px] font-mono transition-colors"
+              >
+                github.com/{preset}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Highlights Badges */}
