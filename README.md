@@ -10,11 +10,9 @@
 
 ---
 
-## 🎥 2-Minute Demo Video (YouTube)
+## 🎥 Demo Video (YouTube)
 
-> **YouTube Video Requirement**: Below is the placeholder for the recorded video demo (2–3 minutes max, Published or Unlisted).
-
-[![YouTube Video Demo](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-ff0000?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=YOUR_YOUTUBE_VIDEO_LINK_HERE)
+[![YouTube Video Demo](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-ff0000?style=for-the-badge&logo=youtube)](https://youtu.be/J4GhtAsLwgA)
 
 
 ---
