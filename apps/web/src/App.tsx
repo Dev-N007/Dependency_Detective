@@ -12,7 +12,7 @@ import { LandingHero } from './components/LandingHero';
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    return (localStorage.getItem('dd-theme') as 'dark' | 'light') || 'dark';
+    return (localStorage.getItem('dd-theme') as 'dark' | 'light') || 'light';
   });
   const [analysis, setAnalysis] = useState<RepositoryAnalysis | null>(null);
   const [selectedNode, setSelectedNode] = useState<DependencyNode | null>(null);
