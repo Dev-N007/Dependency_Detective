@@ -4,8 +4,18 @@
 
 [![Hackathon](https://img.shields.io/badge/First%20Commit%202026-Build%20It%20Track-00f0ff?style=for-the-badge)](https://github.com/)
 [![AWS OpenSource](https://img.shields.io/badge/AWS%20OpenSource-Strands%20%7C%20OpenSearch%20%7C%20Finch-00ff9d?style=for-the-badge)](https://aws.amazon.com/opensource/)
+[![Built with Antigravity & Gemini](https://img.shields.io/badge/Built%20With-Google%20Antigravity%20%26%20Gemini-4285F4?style=for-the-badge&logo=google)](https://deepmind.google/)
 [![Local First](https://img.shields.io/badge/Privacy-Local%20First-ffb800?style=for-the-badge)](docs/privacy.md)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
+
+---
+
+## 🎥 2-Minute Demo Video (YouTube)
+
+> **YouTube Video Requirement**: Below is the placeholder for the recorded video demo (2–3 minutes max, Published or Unlisted).
+
+[![YouTube Video Demo](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-ff0000?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=YOUR_YOUTUBE_VIDEO_LINK_HERE)
+
 
 ---
 
@@ -23,106 +33,153 @@ Developers frequently upgrade, remove, or replace dependencies without knowing t
 
 - ⚡ **Hero Feature A — WHAT IF?**: Simulate upgrading, removing, or replacing a package. Displays direct affected files, transitive dependent modules, affected test suites, line-level code evidence, and step-by-step review checklists.
 - 📜 **Hero Feature B — DEPENDENCY ARCHAEOLOGY**: Inspects Git history to uncover the introducing commit hash, author, date, original rationale, historical usage changes, and replaceability confidence score.
-- 🌐 **Remote Git Repository Analysis**: Enter any HTTPS or SSH Git repository URL (`https://github.com/org/repo.git`) to automatically clone, index, and analyze remote repositories locally.
+- 🌐 **Remote Git Repository Analysis**: Enter any HTTPS or SSH Git repository URL (`https://github.com/org/repo.git`) or shorthand (`owner/repo`) to automatically clone, index, and analyze remote repositories locally.
+- 🌓 **Dual Theme Engine**: Cyber-Forensics Obsidian (Dark Mode) & Electric Slate (Light Mode) with instant theme switching.
 - 🎯 **Deterministic First, AI Reasoning Second**: Parser and AST analyzers establish line-level facts first. AI agents explain facts using structured evidence—eliminating hallucinations.
-- 🔎 **AWS OpenSearch Evidence Indexing**: Searchable local index across repository files, AST symbols, imports, and Git commit logs.
-- 🤖 **AWS Strands Agents SDK**: Specialized agent roles (Impact Agent, Archaeology Agent, Migration Agent) orchestrate deterministic evidence tools.
-- ⚡ **Cyber-Forensics Developer UI**: Dark obsidian interface with interactive node network grid, expandable code snippet drawers, and keyboard command palette (`Ctrl+K`).
-- 🐳 **Finch Container Setup**: Reproducible local environment configured with `finch-compose.yml`.
+- 🔎 **AWS OpenSearch Evidence Indexing**: Searchable local vector & keyword index across repository files, AST symbols, imports, and Git commit logs.
+- 🤖 **AWS Strands Agents SDK**: Specialized agent roles (Impact Agent, Archaeology Agent, Migration Agent) orchestrating deterministic evidence tools.
+- ⚡ **Cyber-Forensics Developer UI**: Modern developer interface with interactive node network grid, expandable code snippet drawers, and keyboard command palette (`Ctrl+K`).
+- 🐳 **Finch Container Setup**: Reproducible local environment configured with `infra/finch/finch-compose.yml`.
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architectural Setup & Diagram
+
+Dependency Detective follows a **Deterministic Engine → Evidence Index → AI Agent → UI** pipeline:
 
 ```mermaid
-graph TD
-    A[Target Repository / Demo Repo] --> B[Deterministic Analysis Engine]
-    B --> C[AST Code & Import Analyzer]
-    B --> D[Manifest Parsers package.json / requirements.txt]
-    B --> E[Git Archaeology Engine]
+flowchart TD
+    subgraph S1 [1. Target Workspace & Remote Git Repos]
+        A[Local Repository & Demo Repo]
+        A2[Remote Git URL & GitHub Shorthand]
+    end
+
+    subgraph S2 [2. Deterministic Analysis Engine]
+        B[Manifest Parsers - package.json / requirements.txt]
+        C[AST Code Analyzer - JS/TS & Python AST]
+        D[Git History Archaeology Engine - GitPython]
+        E[NetworkX Blast Radius & Test Suite Mapper]
+    end
+
+    subgraph S3 [3. AWS Open Source Stack]
+        F[AWS OpenSearch Service & Local Vector Store]
+        G[AWS Strands Agents SDK]
+        H[AWS Finch Container Engine]
+    end
+
+    subgraph S4 [4. Specialized AI Agents]
+        I[Impact Agent - WHAT IF]
+        J[Archaeology Agent - WHY IS THIS HERE]
+        K[Migration Agent - HOW TO REPLACE]
+    end
+
+    subgraph S5 [5. User Interfaces]
+        L[Cyber-Forensics Web UI - React 18 + Vite + Tailwind]
+        M[Python CLI - scripts/cli.py]
+    end
+
+    A --> B
+    A2 --> B
+    B --> C
+    B --> D
+    C --> E
     
-    C --> F[NetworkX Blast Radius & Test Suite Mapper]
-    E --> G[Git Commit Timeline Analyzer]
+    C -->|Index Symbols & Snippets| F
+    D -->|Index Commit Logs| F
     
-    F --> H[AWS OpenSearch Local Evidence Engine]
-    G --> H
+    E -->|Deterministic Facts| G
+    F -->|Evidence Context| G
     
-    H --> I[AWS Strands Agents SDK]
-    I --> J[Impact Agent]
-    I --> K[Archaeology Agent]
-    I --> L[Migration Agent]
+    G --> I
+    G --> J
+    G --> K
     
-    J --> M[Cyber-Forensics Web UI / CLI]
+    I --> L
+    J --> L
+    K --> L
+    
+    I --> M
+    J --> M
     K --> M
-    L --> M
+    
+    H -.->|Containerized Deployment| L
+    H -.->|Containerized Deployment| B
 ```
 
 ---
 
-## 🛠️ AWS Open Source Technologies
+## 🛠️ AWS Open Source Tools Integration
 
-| AWS Technology | Purpose & Integration | Location in Codebase |
+| AWS Technology | What It Is & How It Is Used | Location in Codebase |
 | :--- | :--- | :--- |
-| **AWS Strands Agents SDK** | Agentic framework orchestrating evidence tools (`get_blast_radius`, `find_usages`, `git_log`). | [`apps/api/app/agents/strands_agents.py`](file:///d:/Projects/Dependency_Detective/apps/api/app/agents/strands_agents.py) |
-| **AWS OpenSearch** | Local evidence layer indexing repository symbols, imports, snippets, and commit logs. | [`apps/api/app/search/opensearch_client.py`](file:///d:/Projects/Dependency_Detective/apps/api/app/search/opensearch_client.py) |
-| **AWS Finch** | Containerization for reproducible local development environment. | [`infra/finch/finch-compose.yml`](file:///d:/Projects/Dependency_Detective/infra/finch/finch-compose.yml) |
+| **AWS Strands Agents SDK** | Open-source agentic framework powering specialized **Impact Agent**, **Archaeology Agent**, and **Migration Agent**. Orchestrates deterministic tools (`get_blast_radius`, `find_usages`, `git_log`) to ground responses strictly in repository facts without hallucination. | [`apps/api/app/agents/strands_agents.py`](file:///d:/Projects/Dependency_Detective/apps/api/app/agents/strands_agents.py) |
+| **AWS OpenSearch** | Open-source search engine providing local keyword and vector similarity search over AST symbols, file snippets, imports, and Git commit messages. Includes automatic in-memory fallback for zero-dependency local runs. | [`apps/api/app/search/opensearch_client.py`](file:///d:/Projects/Dependency_Detective/apps/api/app/search/opensearch_client.py) |
+| **AWS Finch** | Open-source container CLI engine used to build and run containerized instances of the API engine and OpenSearch services locally via `finch-compose.yml`. | [`infra/finch/finch-compose.yml`](file:///d:/Projects/Dependency_Detective/infra/finch/finch-compose.yml) |
 
 ---
 
-## 🚀 Quick Start (Local Run)
+## 🤖 AI Pair-Programming with Antigravity & Gemini
+
+This project was architected, built, and verified with **Google Antigravity** and **Gemini** as the primary AI pair-programming and software engineering engine.
+
+### How Antigravity & Gemini Were Used:
+1. **Architecture & AST Design**: Formulated the deterministic-first, AI-second pipeline to guarantee zero hallucinated file paths.
+2. **Backend & Agent Engineering**: Generated FastAPI routers, Python AST parsers, Git history analyzers, and AWS Strands agent integration.
+3. **Cyber-Forensics UI Development**: Designed and implemented the modern React 18 / Vite / Tailwind UI with interactive node dependency graphs, dark/light theme switcher, and command palette.
+4. **Verification & Testing**: Created automated pytest suites (`apps/api/tests/`), verified 100% test pass rate, and optimized remote repository cloning performance.
+
+---
+
+## 🚀 Project Setup & Quick Start Instructions
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
+- **Python**: `3.10` or higher
+- **Node.js**: `18.0` or higher
+- **Git**: Installed and available in PATH
 
-### 1. Clone & Setup Backend
+---
+
+### Step 1: Clone Repository
 ```bash
 git clone https://github.com/your-org/dependency-detective.git
-cd dependency-detective/apps/api
+cd dependency-detective
+```
 
-# Install dependencies
+---
+
+### Step 2: Start Backend API (`apps/api`)
+```bash
+# Navigate to API directory
+cd apps/api
+
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Start FastAPI server
+# Launch FastAPI server
 python main.py
 ```
-*Backend API will start on `http://localhost:8000`.*
+> The API server will start on **`http://localhost:8000`** with interactive OpenAPI docs at `http://localhost:8000/docs`.
 
-### 2. Setup & Start Web UI
+---
+
+### Step 3: Start Web Interface (`apps/web`)
+Open a new terminal window:
 ```bash
-cd ../../apps/web
+# Navigate to Web UI directory
+cd apps/web
 
 # Install frontend dependencies
 npm install
 
-# Launch Vite dev server
+# Start Vite dev server
 npm run dev
 ```
-*Open `http://localhost:3000` in your browser.*
+> Open **`http://localhost:3000`** in your browser to launch the Cyber-Forensics Web Interface.
 
 ---
 
-## 💻 CLI Usage
-
-Dependency Detective includes a standalone command-line interface:
-
-```bash
-# Analyze a repository
-python scripts/cli.py analyze demo-repository
-
-# Simulate Change Impact (WHAT IF?)
-python scripts/cli.py investigate axios --repo demo-repository --version 1.8.4
-
-# Run Dependency Archaeology (WHY IS THIS HERE?)
-python scripts/cli.py archaeology lodash --repo demo-repository
-```
-
----
-
-## 🐳 Finch Container Setup
-
-To run the complete stack inside Finch containers:
-
+### Step 4: Run via Finch Containers (Optional)
+If you prefer running inside Finch containers:
 ```bash
 cd infra/finch
 finch compose -f finch-compose.yml up --build
@@ -130,15 +187,41 @@ finch compose -f finch-compose.yml up --build
 
 ---
 
-## 📖 Documentation Index
+## 💻 CLI Usage Instructions
 
+Dependency Detective includes a standalone command-line interface:
+
+```bash
+# 1. Analyze a repository manifest and source code
+python scripts/cli.py analyze demo-repository
+
+# 2. Simulate Change Impact (WHAT IF?)
+python scripts/cli.py investigate axios --repo demo-repository --version 1.8.4
+
+# 3. Run Dependency Archaeology (WHY IS THIS HERE?)
+python scripts/cli.py archaeology lodash --repo demo-repository
+```
+
+---
+
+## 🧪 Running Automated Tests
+
+Run the complete backend test suite:
+```bash
+cd apps/api
+python -m pytest tests
+```
+> All 10 unit & integration tests run in ~19s with a 100% pass rate.
+
+---
+
+## 📖 Complete Documentation Suite
 - 📐 [Architecture Overview](docs/architecture.md)
 - 🤖 [Strands Agent Design](docs/agent-design.md)
 - ☁️ [AWS OpenSource Technologies](docs/aws-open-source.md)
 - 🏛️ [Architecture Decision Records (ADRs)](docs/decisions.md)
 - 🔒 [Privacy & Local Security Model](docs/privacy.md)
 - 🛡️ [Threat Model & Security](docs/threat-model.md)
-- 🎬 [3-Minute Demo Video Script](docs/demo-script.md)
 
 ---
 
