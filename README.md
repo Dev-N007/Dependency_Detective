@@ -128,8 +128,7 @@ This project was architected, built, and verified with **Google Antigravity** an
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/your-org/dependency-detective.git
-cd dependency-detective
+git clone https://github.com/Dev-N007/Dependency_Detective.git
 ```
 
 ---
