@@ -100,7 +100,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <span className="text-xs font-bold font-mono text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-cyan-400 transition-colors">
                     {node.name}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">v{node.version}</span>
+                  <span className="text-[10px] font-mono text-slate-400">v{node.version}</span>
                 </div>
                 <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 block">{node.usages_count} code references</span>
               </div>
@@ -111,7 +111,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     onTriggerWhatIf(node);
                     onClose();
                   }}
-                  className="px-2.5 py-1 rounded bg-sky-100 dark:bg-cyan-950 hover:bg-sky-200 dark:hover:bg-cyan-900 border border-sky-300 dark:border-cyan-500/30 text-sky-700 dark:text-cyan-300 text-[11px] font-mono flex items-center gap-1 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-md bg-sky-50 dark:bg-cyan-950 hover:bg-sky-100 dark:hover:bg-cyan-900 border border-sky-200 dark:border-cyan-500/30 text-sky-700 dark:text-cyan-300 text-[11px] font-mono flex items-center gap-1 transition-colors cursor-pointer font-semibold"
                 >
                   <Zap className="w-3 h-3 text-sky-600 dark:text-cyan-400" /> What-If
                 </button>
@@ -120,7 +120,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     onTriggerArchaeology(node);
                     onClose();
                   }}
-                  className="px-2.5 py-1 rounded bg-purple-100 dark:bg-purple-950 hover:bg-purple-200 dark:hover:bg-purple-900 border border-purple-300 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 text-[11px] font-mono flex items-center gap-1 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-md bg-purple-50 dark:bg-purple-950 hover:bg-purple-100 dark:hover:bg-purple-900 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 text-[11px] font-mono flex items-center gap-1 transition-colors cursor-pointer font-semibold"
                 >
                   <History className="w-3 h-3 text-purple-600 dark:text-purple-400" /> Why?
                 </button>
