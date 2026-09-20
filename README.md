@@ -48,62 +48,51 @@ Developers frequently upgrade, remove, or replace dependencies without knowing t
 Dependency Detective follows a **Deterministic Engine → Evidence Index → AI Agent → UI** pipeline:
 
 ```mermaid
-flowchart TD
-    subgraph S1 [1. Target Workspace & Remote Git Repos]
-        A[Local Repository & Demo Repo]
-        A2[Remote Git URL & GitHub Shorthand]
+graph TD
+    subgraph S1["1. Workspace & Repositories"]
+        Repo["Local Workspace / Git Repo"]
     end
 
-    subgraph S2 [2. Deterministic Analysis Engine]
-        B[Manifest Parsers - package.json / requirements.txt]
-        C[AST Code Analyzer - JS/TS & Python AST]
-        D[Git History Archaeology Engine - GitPython]
-        E[NetworkX Blast Radius & Test Suite Mapper]
+    subgraph S2["2. Deterministic Analysis Engine"]
+        Engine["AST & Manifest Parsers<br/>(package.json & requirements.txt)"]
+        GitEngine["Git Archaeology Engine<br/>(Commit & Author History)"]
+        GraphEngine["NetworkX Blast Radius<br/>(Test & Symbol Mapper)"]
     end
 
-    subgraph S3 [3. AWS Open Source Stack]
-        F[AWS OpenSearch Service & Local Vector Store]
-        G[AWS Strands Agents SDK]
-        H[AWS Finch Container Engine]
+    subgraph S3["3. AWS Open Source Stack"]
+        OpenSearch["AWS OpenSearch Engine<br/>(Code & Commit Evidence Index)"]
+        Strands["AWS Strands Agents SDK<br/>(Tool-Grounded Orchestrator)"]
+        Finch["AWS Finch Containers<br/>(Local Environment)"]
     end
 
-    subgraph S4 [4. Specialized AI Agents]
-        I[Impact Agent - WHAT IF]
-        J[Archaeology Agent - WHY IS THIS HERE]
-        K[Migration Agent - HOW TO REPLACE]
+    subgraph S4["4. Specialized AI Agents"]
+        Impact["Impact Agent<br/>(WHAT IF)"]
+        Arch["Archaeology Agent<br/>(WHY IS THIS HERE)"]
+        Migr["Migration Agent<br/>(HOW TO REPLACE)"]
     end
 
-    subgraph S5 [5. User Interfaces]
-        L[Cyber-Forensics Web UI - React 18 + Vite + Tailwind]
-        M[Python CLI - scripts/cli.py]
+    subgraph S5["5. User Interfaces"]
+        UI["React Web UI<br/>(Cyber-Forensics Dashboard)"]
+        CLI["Python CLI<br/>(scripts/cli.py)"]
     end
 
-    A --> B
-    A2 --> B
-    B --> C
-    B --> D
-    C --> E
+    Repo --> Engine
+    Repo --> GitEngine
+    Engine --> GraphEngine
     
-    C -->|Index Symbols & Snippets| F
-    D -->|Index Commit Logs| F
+    Engine -->|Code Snippets| OpenSearch
+    GitEngine -->|Commit Logs| OpenSearch
     
-    E -->|Deterministic Facts| G
-    F -->|Evidence Context| G
+    GraphEngine -->|Deterministic Facts| Strands
+    OpenSearch -->|Evidence Context| Strands
     
-    G --> I
-    G --> J
-    G --> K
+    Strands --> Impact & Arch & Migr
     
-    I --> L
-    J --> L
-    K --> L
+    Impact & Arch & Migr --> UI
+    Impact & Arch & Migr --> CLI
     
-    I --> M
-    J --> M
-    K --> M
-    
-    H -.->|Containerized Deployment| L
-    H -.->|Containerized Deployment| B
+    Finch -.-|Containerizes Stack| S2
+    Finch -.-|Containerizes Stack| S3
 ```
 
 ---
