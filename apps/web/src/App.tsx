@@ -26,6 +26,8 @@ export const App: React.FC = () => {
   useEffect(() => {
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(theme);
+    document.body.classList.remove('dark', 'light');
+    document.body.classList.add(theme);
     localStorage.setItem('dd-theme', theme);
   }, [theme]);
 
